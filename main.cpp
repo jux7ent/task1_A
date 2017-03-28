@@ -441,7 +441,7 @@ int main() {
      */
 
     //task1_K
-
+    /*
     unsigned int count_points = 5;
     Point points[count_points];
     points[0].insert(0, 0);
@@ -462,6 +462,7 @@ int main() {
     }
 
     cout << area((unsigned int)(result[count_points].x), pointsArea) << endl;
+     */
 
 
     return 0;
