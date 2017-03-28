@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Point.h"
 #include "cmath"
 
@@ -25,4 +26,10 @@ double dist_between_points(const Point &p1, const Point &p2) {
 Point &Point::operator = (double val) {
     this->x = val;
     this->y = val;
+}
+
+void printPoints(const Point *points, const unsigned int count_points) {
+    for (unsigned int i = 0; i < count_points; ++i) {
+        std::cout << points[i].x << ' ' << points[i].y << std::endl;
+    }
 }

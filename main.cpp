@@ -10,16 +10,7 @@ using std::endl;
 
 #define SQR(x) ((x) * (x))
 
-//взято из Point.cpp
 bool between_points(const Point &p1, const Point &p2, const Point &p3) { //принадлежность точки отрезку
-
-    /*
-    Line line(p1, p2);
-    if (line.isPointOnLine(p3)) {
-        Vector vec1(p3, p1), vec2(p3, p2), vec3(p1, p2), vec4(p1, p3);
-        return (vec1 * vec2 <= 0) && vecMul(vec3, vec4) == 0;
-    }
-     */
     if (!compare(((p3.y - p1.y) * (p2.x - p1.x)) - ((p3.x - p1.x) * (p2.y - p1.y)), 0)) { //принадлежность точки прямой
         Vector vec1(p3, p1), vec2(p3, p2);
         return compare(vec1 * vec2, 0) <= 0;
@@ -89,8 +80,8 @@ double distBetweenSegments(const Point &segm1_1, const Point &segm1_2, const Poi
 }
 
 bool isConvexPolygon(int count_points, const Point *points) {
-    Vector *vec1 = new Vector (points[0], points[1]); //для того чтобы просто поменять указатели
-    Vector *vec2 = new Vector (points[1], points[2]);
+    Vector *vec1 = new Vector(points[0], points[1]); //для того чтобы просто поменять указатели
+    Vector *vec2 = new Vector(points[1], points[2]);
     int sign = compare(vecMul(*vec1, *vec2), 0);
     std::swap(vec1, vec2);
 
@@ -104,6 +95,50 @@ bool isConvexPolygon(int count_points, const Point *points) {
 
     return true;
 }
+
+int orientation(Point p, Point q, Point r)
+{
+    double val = (q.y - p.y) * (r.x - q.x) -
+              (q.x - p.x) * (r.y - q.y);
+
+    return compare(val, 0);
+}
+
+
+Point *convexJarvis(const unsigned int count_points, Point *points)
+{
+    Point *result = new Point[count_points + 1];
+    unsigned int cur = 0;
+
+    int left = 0;
+    for (int i = 1; i < count_points; i++)
+        if (points[i].x < points[left].x)
+            left = i;
+
+    int p = left, q;
+
+    do {
+        result[cur] = points[p];
+        ++cur;
+
+        q = (p + 1) % count_points;
+
+        for (int i = 0; i < count_points; i++)
+        {
+            //если i более подходит, чем q, то обновляем q
+            if (orientation(points[p], points[i], points[q]) == -1)
+                q = i;
+        }
+
+        p = q;
+
+    } while (p != left);
+
+    result[count_points].insert(cur, cur); //в качестве последней точки добавляем сколько всего точек по вып. обол.
+
+    return result;
+}
+
 
 
 class BaseShape {
@@ -396,6 +431,31 @@ int main() {
     cout << pol.area() << endl;
      */
 
+    //task1_K
+
+    unsigned int count_points = 5;
+    Point points[count_points];
+    points[0].insert(0, 0);
+    points[1].insert(2, 0);
+    points[2].insert(0, 2);
+    points[3].insert(1, 1);
+    points[4].insert(2, 2);
+
+    Point *result = convexJarvis(count_points, points);
+
+    cout << result[count_points].x << endl;
+    printPoints(result, (unsigned int)(result[count_points].x));
+
+/*
+    Point pointsArea[(unsigned int)(result[count_points].x)];
+    for (unsigned int i = 0; i < result[count_points].x; ++i) {
+        pointsArea[i].insert(result[i].x, result[i].y);
+    }
+
+    Polygon<(unsigned int)(result[count_points].x)> pol(pointsArea);
+
+    cout << pol.area() << endl;
+    */
 
     return 0;
 }
