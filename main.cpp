@@ -229,7 +229,7 @@ Polygon<points_count>::Polygon(const Point *points) {
 
 template<int points_count>
 bool Polygon<points_count>::check_point(double x, double y) {
-    return check_point(x, y, points_count, points);
+    return ::check_point(x, y, points_count, points);
 }
 
 template<int points_count>
@@ -455,16 +455,14 @@ int main() {
     cout << result[count_points].x << endl;
     printPoints(result, (unsigned int)(result[count_points].x));
 
-/*
+
     Point pointsArea[(unsigned int)(result[count_points].x)];
     for (unsigned int i = 0; i < result[count_points].x; ++i) {
         pointsArea[i].insert(result[i].x, result[i].y);
     }
 
-    Polygon<(unsigned int)(result[count_points].x)> pol(pointsArea);
+    cout << area((unsigned int)(result[count_points].x), pointsArea) << endl;
 
-    cout << pol.area() << endl;
-    */
 
     return 0;
 }
