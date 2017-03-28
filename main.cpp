@@ -139,8 +139,36 @@ Point *convexJarvis(const unsigned int count_points, Point *points)
     return result;
 }
 
+bool check_point(double x, double y, Point *points, unsigned int points_count) {
+    Point p1(x, y), p2(x + 1, y);
+    Line line(p1, p2);
+    unsigned int count_intersect = 0;
+    Line lines[points_count];
+    Point intersect_point;
+
+    for (short i = 0; i < points_count; ++i) { //проверка границ
+        if (between_points(points[i % points_count], points[(i + 1) % points_count], p1))
+            return true;
+    }
+
+    for (short i = 0; i < points_count; ++i) {
+        lines[i].insert(points[i % points_count], points[(i + 1) % points_count]);
+        if (intersection(line, lines[i], intersect_point)) { //если прямые пересекаются
+            if (!intersect_point.is_none) {
+                if (intersect_point.x >= p1.x && between_points(points[i % points_count], points[(i + 1) % points_count], intersect_point)) {
+                    ++count_intersect;
+                }
+            }
+        }
+    }
+
+    return count_intersect % 2 != 0;
+}
 
 
+
+
+//////////////////////////////////////////
 class BaseShape {
 public:
     virtual void shift(const Vector &) = 0;
@@ -187,30 +215,7 @@ Polygon<points_count>::Polygon(const Point *points) {
 
 template<int points_count>
 bool Polygon<points_count>::check_point(double x, double y) {
-  //  return (x > this->points[2].x || x < this->points[1].x || y > this->points[1].y || y < this->points[0].y);
-    Point p1(x, y), p2(x + 1, y);
-    Line line(p1, p2);
-    unsigned int count_intersect = 0;
-    Line lines[points_count];
-    Point intersect_point;
-
-    for (short i = 0; i < points_count; ++i) { //проверка границ
-        if (between_points(this->points[i % points_count], this->points[(i + 1) % points_count], p1))
-            return true;
-    }
-
-    for (short i = 0; i < points_count; ++i) {
-        lines[i].insert(this->points[i % points_count], this->points[(i + 1) % points_count]);
-        if (intersection(line, lines[i], intersect_point)) { //если прямые пересекаются
-            if (!intersect_point.is_none) {
-                if (intersect_point.x >= p1.x && between_points(this->points[i % points_count], this->points[(i + 1) % points_count], intersect_point)) {
-                    ++count_intersect;
-                }
-            }
-        }
-    }
-
-    return count_intersect % 2 != 0;
+    return check_point(x, y, this->points, points_count);
 }
 
 template<int points_count>
