@@ -139,7 +139,7 @@ Point *convexJarvis(const unsigned int count_points, Point *points)
     return result;
 }
 
-bool check_point(double x, double y, Point *points, unsigned int points_count) {
+bool check_point(double x, double y, unsigned int points_count, Point *points) {
     Point p1(x, y), p2(x + 1, y);
     Line line(p1, p2);
     unsigned int count_intersect = 0;
@@ -163,6 +163,20 @@ bool check_point(double x, double y, Point *points, unsigned int points_count) {
     }
 
     return count_intersect % 2 != 0;
+}
+
+double area(unsigned int points_count, Point *points) {
+    double result = 0;
+
+    for (unsigned int i = 0; i < points_count; ++i) {
+        result += points[i % points_count].x * points[(i + 1) % points_count].y - points[i % points_count].y *
+                                                                                  points[(i + 1) % points_count].x;
+    }
+
+    result /= 2;
+    result = std::abs(result);
+
+    return result;
 }
 
 
@@ -215,7 +229,7 @@ Polygon<points_count>::Polygon(const Point *points) {
 
 template<int points_count>
 bool Polygon<points_count>::check_point(double x, double y) {
-    return check_point(x, y, this->points, points_count);
+    return check_point(x, y, points_count, points);
 }
 
 template<int points_count>
@@ -241,17 +255,7 @@ bool Polygon<points_count>::intersect_segment(double x1, double y1, double x2, d
 
 template<int points_count>
 double Polygon<points_count>::area() {
-    double result = 0;
-
-    for (unsigned int i = 0; i < points_count; ++i) {
-        result += points[i % points_count].x * points[(i + 1) % points_count].y - points[i % points_count].y *
-                                                                                  points[(i + 1) % points_count].x;
-    }
-
-    result /= 2;
-    result = std::abs(result);
-
-    return result;
+    return area(points_count, points);
 }
 
 //////////////////////////////////////////////////////
