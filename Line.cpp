@@ -1,18 +1,6 @@
 #include <cmath>
 #include "Line.h"
-
-#define PRESICION 1e-9
-
-int compare(double num1, double num2) {
-    if (std::abs(num1 - num2) < PRESICION) {
-        return 0;
-    }
-    return num1 < num2 ? -1 : 1;
-}
-
-double det (double a, double b, double c, double d) {
-    return a * d - b * c;
-}
+#include "other_func.cpp"
 
 Line::Line() {
     a = b = c = 0;

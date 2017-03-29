@@ -1,5 +1,5 @@
 #pragma once
-
+#include "other_func.cpp"
 #include "Point.h"
 
 class Line {

@@ -10,135 +10,6 @@ using std::endl;
 
 #define SQR(x) ((x) * (x))
 
-bool between_points(const Point &p1, const Point &p2, const Point &p3) { //принадлежность точки отрезку
-    if (!compare(((p3.y - p1.y) * (p2.x - p1.x)) - ((p3.x - p1.x) * (p2.y - p1.y)), 0)) { //принадлежность точки прямой
-        Vector vec1(p3, p1), vec2(p3, p2);
-        return compare(vec1 * vec2, 0) <= 0;
-    }
-
-    return false;
-}
-
-bool isPointOnRay(const Point &p1, const Point &p2, const Point &p) {
-    Line line(p1, p2);
-    if (line.isPointOnLine(p)) {
-        Vector vec1(p1, p), vec2(p, p2);
-        return vec1 * vec2 >= 0;
-    }
-    else {
-        return false;
-    }
-}
-
-double distPointRay(const Point &p1, const Point &p2, const Point &p) {
-    Vector vec1(p1, p2), vec2(p1, p);
-    if (vec1 * vec2 >= 0) {
-        Line line(p1, p2);
-        return line.distPointLine(p);
-    }
-    else {
-        Vector vec_result(p1, p);
-        return vec_result.length();
-    }
-}
-
-double distPointSegment(const Point &p1, const Point &p2, const Point &p) {
-    double dist1, dist2;
-    dist1 = distPointRay(p1, p2, p);
-    dist2 = distPointRay(p2, p1, p);
-
-    return dist1 > dist2 ? dist1 : dist2;
-}
-
-bool segmentIntersection(const Point &segm1_1, const Point &segm1_2, const Point &segm2_1, const Point &segm2_2) {
-    Line line1(segm1_1, segm1_2), line2(segm2_1, segm2_2);
-    Point pointIntersection;
-
-    if (intersection(line1, line2, pointIntersection)) {
-        return between_points(segm1_1, segm1_2, pointIntersection) && between_points(segm2_1, segm2_2, pointIntersection);
-    }
-    else {
-        return false;
-    }
-}
-
-double distBetweenSegments(const Point &segm1_1, const Point &segm1_2, const Point &segm2_1, const Point &segm2_2) {
-    if (segmentIntersection(segm1_1, segm1_2, segm2_1, segm2_2))
-        return 0;
-    else {
-        double result, temp;
-        result = distPointSegment(segm1_1, segm1_2, segm2_1);
-        temp = distPointSegment(segm1_1, segm1_2, segm2_2);
-        result = result < temp ? result : temp;
-        temp = distPointSegment(segm2_1, segm2_2, segm1_1);
-        result = result < temp ? result : temp;
-        temp = distPointSegment(segm2_1, segm2_2, segm1_2);
-        result = result < temp ? result : temp;
-
-        return result;
-    }
-}
-
-bool isConvexPolygon(int count_points, const Point *points) {
-    Vector *vec1 = new Vector(points[0], points[1]); //для того чтобы просто поменять указатели
-    Vector *vec2 = new Vector(points[1], points[2]);
-    int sign = compare(vecMul(*vec1, *vec2), 0);
-    std::swap(vec1, vec2);
-
-    for (unsigned int i = 2; i < count_points; ++i) {
-        vec2->update(points[i % count_points], points[(i + 1) % count_points]);
-        if (sign != compare(vecMul(*vec1, *vec2), 0))
-            return false;
-    }
-
-    delete vec1, vec2;
-
-    return true;
-}
-
-int orientation(Point p, Point q, Point r)
-{
-    double val = (q.y - p.y) * (r.x - q.x) -
-              (q.x - p.x) * (r.y - q.y);
-
-    return compare(val, 0);
-}
-
-
-Point *convexJarvis(const unsigned int count_points, Point *points)
-{
-    Point *result = new Point[count_points + 1];
-    unsigned int cur = 0;
-
-    int left = 0;
-    for (int i = 1; i < count_points; i++)
-        if (points[i].x < points[left].x)
-            left = i;
-
-    int p = left, q;
-
-    do {
-        result[cur] = points[p];
-        ++cur;
-
-        q = (p + 1) % count_points;
-
-        for (int i = 0; i < count_points; i++)
-        {
-            //если i более подходит, чем q, то обновляем q
-            if (orientation(points[p], points[i], points[q]) == -1)
-                q = i;
-        }
-
-        p = q;
-
-    } while (p != left);
-
-    result[count_points].insert(cur, cur); //в качестве последней точки добавляем сколько всего точек по вып. обол.
-
-    return result;
-}
-
 bool check_point(double x, double y, unsigned int points_count, Point *points) {
     Point p1(x, y), p2(x + 1, y);
     Line line(p1, p2);
@@ -318,9 +189,9 @@ int main() {
     points[2].insert(v2.x, v2.y);
     Triangle tr(points);
     cout << tr.area() << endl;
-    */
+
     //task1_C
-    /*
+
     Line line1(1, 1, -1), line2(1, -1, 0);
     cout << std::setfill('0') << std::setprecision(10) << std::fixed;
     cout << line1.a << ' ' << line1.b << endl;
@@ -334,10 +205,10 @@ int main() {
         cout << "lines don't intersect" << endl;
         cout << std::abs(line2.c - line1.c) / (sqrt(SQR(line1.a) + SQR(line1.b))) << endl;
     }
-    */
+
 
     //task1_D
-    /*
+
     Point point(1, 6), point1(3, 7), point2(5, 8);
     Line line(point1, point2);
 
@@ -361,20 +232,20 @@ int main() {
     else {
         cout << "NO" << endl;
     }
-     */
+
 
     //task1_E
-    /*
+
     Point point(3, 0), point1(1, 1), point2(2, 1);
     Line line(point1, point2);
 
     cout << line.distPointLine(point) << endl;
     cout << distPointRay(point1, point2, point) << endl;
     cout << distPointSegment(point1, point2, point) << endl;
-     */
+
 
     //task1_F
-    /*
+
     Point s1_1(5, 1), s1_2(2, 6), s2_1(1, 1), s2_2(7, 8);
     if (segmentIntersection(s1_1, s1_2, s2_1, s2_2)) {
         cout << "YES" << endl;
@@ -382,16 +253,16 @@ int main() {
     else {
         cout << "NO" << endl;
     }
-     */
+
 
     //task1_G
-    /*
+
     Point s1_1(1, 1), s1_2(2, 2), s2_1(2, 1), s2_2(3, 0);
     cout << distBetweenSegments(s1_1, s1_2, s2_1, s2_2) << endl;
-     */
+
 
     //task1_H
-    /*
+
     int count_points = 3;
     Point points[3];
     points[0].insert(0, 0);
@@ -404,10 +275,10 @@ int main() {
     else {
         cout << "NO" << endl;
     }
-    */
+
 
     //task1_I
-    /*
+
     const int count_points = 3;
 
     Point point(1, 8);
@@ -425,10 +296,10 @@ int main() {
     else {
         cout << "NO" << endl;
     }
-     */
+
 
     //task1_J
-    /*
+
     const int count_points = 3;
     Point points[count_points];
     points[0].insert(1, 0);
@@ -438,10 +309,10 @@ int main() {
     Polygon<count_points> pol(points);
 
     cout << pol.area() << endl;
-     */
+
 
     //task1_K
-    /*
+
     unsigned int count_points = 5;
     Point points[count_points];
     points[0].insert(0, 0);
@@ -463,6 +334,7 @@ int main() {
 
     cout << area((unsigned int)(result[count_points].x), pointsArea) << endl;
      */
+
 
 
     return 0;

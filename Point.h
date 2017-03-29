@@ -10,5 +10,5 @@ public:
     friend double dist_between_points(const Point &, const Point &);
     Point &operator = (double);
     friend void printPoints(const Point *, const unsigned int);
-    //   friend bool between_points(const Point &, const Point &, const Point &);
+    friend bool between_points(const Point &, const Point &, const Point &);
 };

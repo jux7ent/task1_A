@@ -8,7 +8,6 @@ class Vector {
 private:
     friend Vector plus_minus(const Vector &, const Vector &, bool); //true - '+', false - '-'
 public:
-    double x, y;
     Vector();
     Vector(double, double);
     Vector(const Point &, const Point &);
