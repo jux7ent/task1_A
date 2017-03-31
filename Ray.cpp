@@ -32,6 +32,10 @@ double Ray::distance_to_point(const Point &point) {
     }
 }
 
+bool Ray::intersect_to_segment(const Segment &segment) {
+
+}
+
 Point Ray::first_point() const {
     return first_point_;
 }

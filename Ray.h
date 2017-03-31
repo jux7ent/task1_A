@@ -15,6 +15,8 @@ public:
 
     Ray(const Point &first_point, const Point &second_point);
 
+    bool intersect_to_segment(const Segment &segment);
+
     double distance_to_point(const Point &point);
 
     Point first_point() const;

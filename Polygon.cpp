@@ -1,14 +1,16 @@
 #include <cmath>
 #include <algorithm>
+#include <iostream>
 #include "Polygon.h"
 #include "other_func.h"
+#include "Ray.h"
 
 bool check_point(const Point &verified_point, Point *points, unsigned int points_count) {
 
-    Point extension(verified_point.x(), verified_point.y() + 1);
+    Point extension(verified_point.x() + 123, verified_point.y() + 15);
+    Ray ray(verified_point, extension);
     Line line(verified_point, extension);
     Line lines[points_count];
-    Point intersection_point;
 
     unsigned int count_intersect = 0;
 
@@ -25,22 +27,29 @@ bool check_point(const Point &verified_point, Point *points, unsigned int points
 
         lines[i].update(points[i % points_count], points[(i + 1) % points_count]);
 
-        if (intersection(line, lines[i])) { //если прямые пересекаются или совпадают
+        if (intersection(line, lines[i]) == 1) { //если прямые пересекаются
 
-
+            Point *intersect_point = intersection_point(line, lines[i]);
             Segment segment(points[i % points_count], points[(i + 1) % points_count]);
 
-            if (intersection_point.x() >= verified_point.x() &&
-                intersection_point.belong_to_segment(segment)) {
+            if (intersect_point->belong_to_ray(ray) &&
+                intersect_point->belong_to_segment(segment)) {
 
                 ++count_intersect;
 
             }
 
+            delete intersect_point;
+
         }
+        else if (intersection(line, lines[i]) == 2) {
+            if (verified_point.belong_to_segment({points[i % points_count], points[(i + 1) % points_count]}))
+                return true;
+        }
+
     }
 
-    return count_intersect % 2 != 0;
+     return count_intersect % 2 != 0;
 }
 
 double area(unsigned int points_count, Point *points) {

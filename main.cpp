@@ -1,7 +1,7 @@
 #include "task.h"
 
 int main() {
-    H();
+    I();
 
     return 0;
 }
