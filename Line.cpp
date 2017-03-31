@@ -22,8 +22,8 @@ void Line::update(const Point &first_point, const Point &second_point) {
     c_ = first_point.x() * second_point.y() - second_point.x() * first_point.y();
 }
 
-int intersection(const Line &first_line, const Line &second_line, Point &point) {
-    point.isNone(true);
+int intersection(const Line &first_line, const Line &second_line) {
+
     double val = det(first_line.a_, first_line.b_, second_line.a_, second_line.b_);
 
     if (val == 0) { //прямые совпадают или параллельны
@@ -37,12 +37,21 @@ int intersection(const Line &first_line, const Line &second_line, Point &point) 
 
     } else {
 
-        point.insert(-det(first_line.c_, first_line.b_, second_line.c_, second_line.b_) / val,
-                     -det(first_line.a_, first_line.c_, second_line.a_, second_line.c_) / val);
-
         return 1;
 
     }
+}
+
+Point *intersection_point(const Line &first_line, const Line &second_line) {
+
+    Point *result = new Point;
+    double val = det(first_line.a_, first_line.b_, second_line.a_, second_line.b_);
+
+    result->insert(-det(first_line.c_, first_line.b_, second_line.c_, second_line.b_) / val,
+                 -det(first_line.a_, first_line.c_, second_line.a_, second_line.c_) / val);
+
+    return result;
+
 }
 
 bool Line::isPointOnLine(const Point &point) {

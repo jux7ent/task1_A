@@ -4,7 +4,7 @@
 
 class Segment {
 
-    friend bool intersection(const Segment &first_segment, const Segment &second_segment, Point &intersection_point);
+    friend bool intersection(const Segment &first_segment, const Segment &second_segment);
 
 private:
 

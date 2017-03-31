@@ -25,18 +25,15 @@ bool check_point(const Point &verified_point, Point *points, unsigned int points
 
         lines[i].update(points[i % points_count], points[(i + 1) % points_count]);
 
-        if (intersection(line, lines[i], intersection_point) == 1) { //если прямые пересекаются
+        if (intersection(line, lines[i])) { //если прямые пересекаются или совпадают
 
-            if (!intersection_point.isNone()) {
 
-                Segment segment(points[i % points_count], points[(i + 1) % points_count]);
+            Segment segment(points[i % points_count], points[(i + 1) % points_count]);
 
-                if (intersection_point.x() >= verified_point.x() &&
-                        intersection_point.belong_to_segment(segment)) {
+            if (intersection_point.x() >= verified_point.x() &&
+                intersection_point.belong_to_segment(segment)) {
 
-                    ++count_intersect;
-
-                }
+                ++count_intersect;
 
             }
 

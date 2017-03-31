@@ -20,8 +20,10 @@ Segment::Segment(const Point &first_point, const Point &second_point) {
 double Segment::distance_to_segment(const Segment &segment) const {
     Point intersection_point;
 
-    if (intersection(*this, segment, intersection_point))
+    if (intersection(*this, segment))
+
         return 0;
+
     else {
 
         double result, temp;
@@ -65,15 +67,34 @@ Point Segment::second_point() const {
     return second_point_;
 }
 
-bool intersection(const Segment &first_segment, const Segment &second_segment, Point &intersection_point) {
+bool intersection(const Segment &first_segment, const Segment &second_segment) {
 
     Line first_line(first_segment.first_point_, first_segment.second_point_);
     Line second_line(second_segment.first_point_, second_segment.second_point_);
 
-    if (intersection(first_line, second_line, intersection_point)) {
-        return intersection_point.belong_to_segment(first_segment) && intersection_point.belong_to_segment(second_segment);
+    if (intersection(first_line, second_line)) {
+
+        Point *intersect_point = intersection_point(first_line, second_line);
+
+        if (intersect_point->belong_to_segment(first_segment) && intersect_point->belong_to_segment(second_segment)) {
+
+            delete intersect_point; //intersection_point() выделяет память
+
+            return true;
+
+        }
+        else {
+
+            delete intersect_point; //intersection_point() выделяет память
+
+            return false;
+
+        }
+
     }
     else {
+
         return false;
+
     }
 }

@@ -60,13 +60,19 @@ void C() {
     cout << first_line.b() << ' ' << -first_line.a() << endl;
     cout << second_line.b() << ' ' << -second_line.a() << endl;
 
-    Point intersect_point;
+    if (intersection(first_line, second_line)) {
 
-    if (intersection(first_line, second_line, intersect_point)) {
-        cout << intersect_point.x() << ' ' << intersect_point.y() << endl;
+        Point *intersect_point = intersection_point(first_line, second_line);
+
+        cout << intersect_point->x() << ' ' << intersect_point->y() << endl;
+
+        delete intersect_point;
+
     }
     else {
+
         cout << first_line.distance_to_line(second_line) << endl;
+
     }
 
 }
@@ -148,9 +154,7 @@ void F() {
 
     Segment second_segment(point1_x, point1_y, point2_x, point2_y);
 
-    Point intersection_point;
-
-    if (intersection(first_segment, second_segment, intersection_point)) {
+    if (intersection(first_segment, second_segment)) {
         cout << "YES" << endl;
     }
     else {

@@ -4,7 +4,8 @@ class Point;
 
 class Line {
 
-    friend int intersection(const Line &, const Line &, Point &); // 0 - параллельны, 1 - пересекаются, 2 - совпадают
+    friend int intersection(const Line &first_line, const Line &second_line); // 0 - параллельны, 1 - пересекаются, 2 - совпадают
+    friend Point *intersection_point(const Line &first_line, const Line &second_line);
 
 private:
 
