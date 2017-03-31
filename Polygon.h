@@ -123,10 +123,6 @@ double Polygon<points_count>::area() const {
 
 class Rectangle : public Polygon<4> {
 
-protected:
-
-    static unsigned int count_points = 4;
-
 public:
 
     Rectangle() : Polygon() {}
@@ -138,10 +134,6 @@ public:
 ///////////////////////////////////////////////////////
 
 class Triangle : public Polygon<3> {
-
-protected:
-
-    static unsigned int points_count = 3;
 
 public:
 
