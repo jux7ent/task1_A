@@ -1,6 +1,8 @@
 #include <cmath>
+#include <cstdlib>
 #include "Line.h"
 #include "other_func.h"
+#include "Vector.h"
 
 Line::Line() {
     a_ = b_ = c_ = 0;
@@ -50,6 +52,7 @@ Point *intersection_point(const Line &first_line, const Line &second_line) {
     result->insert(-det(first_line.c_, first_line.b_, second_line.c_, second_line.b_) / val,
                  -det(first_line.a_, first_line.c_, second_line.a_, second_line.c_) / val);
 
+
     return result;
 
 }
@@ -58,12 +61,27 @@ bool Line::isPointOnLine(const Point &point) {
     return !compare((a_ * point.x() + b_ * point.y() + c_), 0);
 }
 
-double Line::distance_to_point(const Point &point) {
-    return std::abs(a_ * point.x() + b_ * point.y() + c_) / sqrt(a_ * a_ + b_ * b_);
+double Line::distance_to_point(const Point &point)  const {
+
+    if (point.belong_to_line(*this))
+        return 0;
+
+    return std::abs(a_ * point.x() + b_ * point.y() + c_) / sqrt(sqr(a_) + sqr(b_));
+
 }
 
 double Line::distance_to_line(const Line &line) const {
-    return std::abs(line.c() - this->c()) / (sqrt(sqr(this->a()) + sqr(this->b())));
+
+    double coefficient = 1;
+
+    if (a_ != line.a()) {
+        if (a_ == 0)
+            exit(10);
+        coefficient = line.a() / a_;
+    }
+
+    return std::abs(line.c() - c_ / coefficient) / sqrt(sqr(a_ / coefficient) + sqr(b_ / coefficient));
+
 }
 
 double Line::a() const {

@@ -23,7 +23,7 @@ public:
 
     bool isPointOnLine(const Point &point);
 
-    double distance_to_point(const Point &point);
+    double distance_to_point(const Point &point) const;
 
     double distance_to_line(const Line &line) const;
 

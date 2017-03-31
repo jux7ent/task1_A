@@ -46,7 +46,7 @@ void B() {
 }
 
 void C() {
-
+/*
     double a, b, c;
 
     cin >> a >> b >> c;
@@ -56,11 +56,33 @@ void C() {
     cin >> a >> b >> c;
 
     Line second_line(a, b, c);
+    */
+
+    double x, y;
+
+    cin >> x >> y;
+
+    Point first_point(x, y);
+
+    cin >> x >> y;
+
+    Point second_point(x, y);
+
+    cin >> x >> y;
+
+    Point third_point(x, y);
+
+    cin >> x >> y;
+
+    Point fourth_point(x, y);
+
+    Line first_line(first_point, second_point);
+    Line second_line(third_point, fourth_point);
 
     cout << first_line.b() << ' ' << -first_line.a() << endl;
     cout << second_line.b() << ' ' << -second_line.a() << endl;
 
-    if (intersection(first_line, second_line)) {
+    if (intersection(first_line, second_line) == 1) {
 
         Point *intersect_point = intersection_point(first_line, second_line);
 
@@ -68,6 +90,9 @@ void C() {
 
         delete intersect_point;
 
+    }
+    else if (intersection(first_line, second_line) == 2) {
+        cout << 0 << endl;
     }
     else {
 
