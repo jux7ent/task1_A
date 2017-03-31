@@ -22,22 +22,25 @@ void Line::update(const Point &first_point, const Point &second_point) {
     c_ = first_point.x() * second_point.y() - second_point.x() * first_point.y();
 }
 
-bool intersection(const Line &first_line, const Line &second_line, Point &point) {
+int intersection(const Line &first_line, const Line &second_line, Point &point) {
     point.isNone(true);
     double val = det(first_line.a_, first_line.b_, second_line.a_, second_line.b_);
 
     if (val == 0) { //прямые совпадают или параллельны
 
-        return !compare(det(first_line.a_, first_line.c_, second_line.a_, second_line.c_) -
+        if(!compare(det(first_line.a_, first_line.c_, second_line.a_, second_line.c_) -
                         det(first_line.b_, first_line.c_, second_line.b_, second_line.c_), 0) &&
-               !compare(det(first_line.a_, first_line.c_, second_line.a_, second_line.c_), 0);
+               !compare(det(first_line.a_, first_line.c_, second_line.a_, second_line.c_), 0))
+            return 2;
+        else
+            return 0;
 
     } else {
 
         point.insert(-det(first_line.c_, first_line.b_, second_line.c_, second_line.b_) / val,
                      -det(first_line.a_, first_line.c_, second_line.a_, second_line.c_) / val);
 
-        return true;
+        return 1;
 
     }
 }

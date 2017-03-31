@@ -94,7 +94,7 @@ bool Polygon<points_count>::intersect_segment(const Segment &segment) const {
 
         lines[i].update(points_[i % points_count], points_[(i + 1) % points_count]);
 
-        if (intersection(line, lines[i], intersect_point)) { //если прямые пересекаются
+        if (intersection(line, lines[i], intersect_point) == 1) { //если прямые пересекаются
 
             Segment temp_segment(points_[i % points_count], points_[(i + 1) % points_count]);
 
@@ -107,6 +107,11 @@ bool Polygon<points_count>::intersect_segment(const Segment &segment) const {
                 }
 
             }
+
+        }
+        else if (intersection(line, lines[i], intersect_point) == 2) {
+
+            return true;
 
         }
     }

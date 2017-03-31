@@ -4,7 +4,7 @@ class Point;
 
 class Line {
 
-    friend bool intersection(const Line &, const Line &, Point &);
+    friend int intersection(const Line &, const Line &, Point &); // 0 - параллельны, 1 - пересекаются, 2 - совпадают
 
 private:
 

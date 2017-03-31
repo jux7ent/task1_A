@@ -1,8 +1,6 @@
 #include <cmath>
 #include <algorithm>
 #include "Polygon.h"
-#include "Line.h"
-#include "Segment.h"
 #include "other_func.h"
 
 bool check_point(const Point &verified_point, Point *points, unsigned int points_count) {
@@ -27,7 +25,7 @@ bool check_point(const Point &verified_point, Point *points, unsigned int points
 
         lines[i].update(points[i % points_count], points[(i + 1) % points_count]);
 
-        if (intersection(line, lines[i], intersection_point)) { //если прямые пересекаются
+        if (intersection(line, lines[i], intersection_point) == 1) { //если прямые пересекаются
 
             if (!intersection_point.isNone()) {
 
