@@ -21,7 +21,7 @@ public:
 
     void update(const Point &first_point, const Point &second_point);
 
-    bool isPointOnLine(const Point &point);
+    int isPointOnLine(const Point &point);
 
     double distance_to_point(const Point &point) const;
 

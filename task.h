@@ -46,17 +46,6 @@ void B() {
 }
 
 void C() {
-/*
-    double a, b, c;
-
-    cin >> a >> b >> c;
-
-    Line first_line(a, b, c);
-
-    cin >> a >> b >> c;
-
-    Line second_line(a, b, c);
-    */
 
     double x, y;
 

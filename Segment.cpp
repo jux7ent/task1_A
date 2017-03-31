@@ -1,6 +1,8 @@
+#include <iostream>
 #include "Segment.h"
 #include "Ray.h"
 #include "Line.h"
+#include "other_func.h"
 
 Segment::Segment() {
     first_point_.insert(0, 0);
@@ -69,32 +71,15 @@ Point Segment::second_point() const {
 
 bool intersection(const Segment &first_segment, const Segment &second_segment) {
 
-    Line first_line(first_segment.first_point_, first_segment.second_point_);
-    Line second_line(second_segment.first_point_, second_segment.second_point_);
+    bool f_condition = addition_intersection(first_segment.first_point().x(), first_segment.second_point().x(),
+                                             second_segment.first_point().x(), second_segment.second_point().x());
+    bool s_condition = addition_intersection(first_segment.first_point().y(), first_segment.second_point().y(),
+                                             second_segment.first_point().y(), second_segment.second_point().y());
+    bool t_contidion = area_triangle(first_segment.first_point(), first_segment.second_point(), second_segment.first_point()) *
+                       area_triangle(first_segment.first_point(), first_segment.second_point(), second_segment.second_point()) <= 0;
+    bool fo_contidion = area_triangle(second_segment.first_point(), second_segment.second_point(), first_segment.first_point()) *
+                        area_triangle(second_segment.first_point(), second_segment.second_point(), first_segment.second_point()) <= 0;
 
-    if (intersection(first_line, second_line)) {
+    return f_condition && s_condition && t_contidion && fo_contidion;
 
-        Point *intersect_point = intersection_point(first_line, second_line);
-
-        if (intersect_point->belong_to_segment(first_segment) && intersect_point->belong_to_segment(second_segment)) {
-
-            delete intersect_point; //intersection_point() выделяет память
-
-            return true;
-
-        }
-        else {
-
-            delete intersect_point; //intersection_point() выделяет память
-
-            return false;
-
-        }
-
-    }
-    else {
-
-        return false;
-
-    }
 }

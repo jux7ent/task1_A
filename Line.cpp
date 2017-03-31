@@ -57,8 +57,10 @@ Point *intersection_point(const Line &first_line, const Line &second_line) {
 
 }
 
-bool Line::isPointOnLine(const Point &point) {
-    return !compare((a_ * point.x() + b_ * point.y() + c_), 0);
+int Line::isPointOnLine(const Point &point) { // 1 - верхняя полуплоскость, -1 - нижняя, 0 - на линии
+
+    return compare((a_ * point.x() + b_ * point.y() + c_), 0);
+
 }
 
 double Line::distance_to_point(const Point &point)  const {
