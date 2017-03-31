@@ -88,28 +88,32 @@ bool Polygon<points_count>::intersect_segment(const Segment &segment) const {
 
     Line line(segment.first_point(), segment.second_point());
     Line lines[points_count];
-    Point intersect_point;
 
     for (short i = 0; i < points_count; ++i) {
 
         lines[i].update(points_[i % points_count], points_[(i + 1) % points_count]);
 
-        if (intersection(line, lines[i], intersect_point) == 1) { //если прямые пересекаются
+        if (intersection(line, lines[i]) == 1) { //если прямые пересекаются
 
             Segment temp_segment(points_[i % points_count], points_[(i + 1) % points_count]);
+            Point *intersect_point = intersection_point(line, lines[i]);
 
-            if (intersect_point.belong_to_segment(temp_segment)) { //если true, то точка лежит на стороне
+            if (intersect_point->belong_to_segment(temp_segment)) { //если true, то точка лежит на стороне
 
-                if (intersect_point.belong_to_segment(segment)) { //если точка лежит на отрезке
+                if (intersect_point->belong_to_segment(segment)) { //если точка лежит на отрезке
+
+                    delete intersect_point;
 
                     return true;
 
                 }
 
+                delete intersect_point;
+
             }
 
         }
-        else if (intersection(line, lines[i], intersect_point) == 2) {
+        else if (intersection(line, lines[i]) == 2) {
 
             return true;
 
