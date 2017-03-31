@@ -125,7 +125,7 @@ class Rectangle : public Polygon<4> {
 
 protected:
 
-    const unsigned int count_points = 4;
+    static unsigned int count_points = 4;
 
 public:
 
@@ -141,7 +141,7 @@ class Triangle : public Polygon<3> {
 
 protected:
 
-    const unsigned int points_count = 3;
+    static unsigned int points_count = 3;
 
 public:
 
