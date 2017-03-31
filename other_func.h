@@ -2,7 +2,7 @@
 
 #include "Point.h"
 
-#define PRESICION 1e-9
+#define PRECISION 1e-9
 
 
 inline double sqr(double x) {

@@ -2,7 +2,7 @@
 #include "other_func.h"
 
 int compare(double num1, double num2) {
-    if (std::abs(num1 - num2) < PRESICION) {
+    if (std::abs(num1 - num2) < PRECISION) {
         return 0;
     }
     return num1 < num2 ? -1 : 1;
