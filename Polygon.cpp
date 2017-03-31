@@ -59,24 +59,34 @@ double area(unsigned int points_count, Point *points) {
 
 bool isConvexPolygon(const Point *points, int count_points) {
 
-    Vector *first_vector = new Vector(points[0], points[1]); //для того чтобы просто поменять указатели
-    Vector *second_vector = new Vector(points[1], points[2]);
-    int sign = compare(vecMul(*first_vector, *second_vector), 0);
+    int i, j, k;
+    int flag = 0;
+    double z;
 
-    std::swap(first_vector, second_vector);
+    if (count_points < 3)
+        return(0);
 
-    for (unsigned int i = 2; i < count_points; ++i) {
+    for (i = 0; i< count_points; i++) {
 
-        second_vector->update(points[i % count_points], points[(i + 1) % count_points]);
+        j = (i + 1) % count_points;
+        k = (i + 2) % count_points;
+        z  = (points[j].x() - points[i].x()) * (points[k].y() - points[j].y());
+        z -= (points[j].y() - points[i].y()) * (points[k].x() - points[j].x());
 
-        if (sign != compare(vecMul(*first_vector, *second_vector), 0))
+        if (z < 0)
+            flag |= 1;
+        else if (z > 0)
+            flag |= 2;
+        if (flag == 3)
             return false;
 
     }
 
-    delete first_vector, second_vector;
+    if (flag != 0)
+        return true;
+    else
+        return(false);
 
-    return true;
 }
 
 Point *convexJarvis(unsigned int count_points, Point *points) {

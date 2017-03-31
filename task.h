@@ -202,7 +202,7 @@ void H() {
 
     for (unsigned int i = 0; i < points_count; ++i) {
 
-        double x, y;
+        int x, y;
 
         cin >> x >> y;
 
