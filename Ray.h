@@ -2,7 +2,7 @@
 #include "Point.h"
 #include "Vector.h"
 
-class Ray {
+class Ray : public BaseShape {
 
 private:
 
@@ -15,7 +15,9 @@ public:
 
     Ray(const Point &first_point, const Point &second_point);
 
-    bool intersect_to_segment(const Segment &segment);
+    bool intersect_to_segment(const Segment &segment) const;
+
+    void shift(const Vector &vector);
 
     double distance_to_point(const Point &point);
 

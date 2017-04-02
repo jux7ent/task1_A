@@ -272,29 +272,38 @@ void J() {
 
 void K() {
 
-    unsigned int points_count;
+    int points_count;
 
     cin >> points_count;
 
-    Point *points = new Point[points_count];
+    std::vector<Point> points;
 
-    for (unsigned int i = 0; i < points_count; ++i) {
+    for (int i = 0; i < points_count; ++i) {
 
-        double x, y;
+        int x, y;
 
         cin >> x >> y;
 
-        points[i].insert(x, y);
+        Point temp_point(x, y);
 
+        points.push_back(temp_point);
     }
 
-    Point *result = convexJarvis(points_count, points);
+    std::vector<int> result;
 
-    cout << result[points_count].x() << endl;
-    printPoints((unsigned int)(result[points_count].x()), result);
+    convexJarvis(points, result);
 
-    cout << area((unsigned int)(result[points_count].x()), result) << endl;
+    cout << result.size() << endl;
+    points_count = result.size();
+    Point *pt_area = new Point[points_count];
+
+    for (int i = 0; i < result.size(); ++i) {
+        cout << points[result[i]].x() << ' ' << points[result[i]].y() << endl;
+        pt_area[i] = points[result[i]];
+    }
+
+    cout << area(points_count, pt_area) << endl;
 
 
-    delete[] points;
+    delete[] pt_area;
 }

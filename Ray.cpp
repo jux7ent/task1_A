@@ -32,8 +32,23 @@ double Ray::distance_to_point(const Point &point) {
     }
 }
 
-bool Ray::intersect_to_segment(const Segment &segment) {
+bool Ray::intersect_to_segment(const Segment &segment) const {
+    Line f_line(first_point_, second_point_);
+    Line s_line(segment.first_point(), segment.second_point());
 
+    if (intersection(f_line, s_line)) {
+        Point *t_pt = intersection_point(f_line, s_line);
+
+        bool result = t_pt->belong_to_segment(segment) && t_pt->belong_to_ray(*this);
+
+        delete t_pt;
+
+        return result;
+
+    }
+    else {
+        return false;
+    }
 }
 
 Point Ray::first_point() const {
@@ -42,4 +57,9 @@ Point Ray::first_point() const {
 
 Point Ray::second_point() const {
     return second_point_;
+}
+
+void Ray::shift(const Vector &vector) {
+    first_point_.shift(vector);
+    second_point_.shift(vector);
 }

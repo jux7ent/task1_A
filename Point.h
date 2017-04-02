@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Polygon.h"
+
 class Line;
 class Ray;
 class Segment;
 
-class Point {
+class Point : public BaseShape {
 
     friend void printPoints(const unsigned int points_count, const Point *);
 
@@ -42,5 +44,7 @@ public:
     bool isNone(bool sign);
 
     bool isNone();
+
+    void shift(const Vector &v);
 
 };

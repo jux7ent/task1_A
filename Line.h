@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Polygon.h"
+
 class Point;
 
-class Line {
+class Line : public BaseShape {
 
     friend int intersection(const Line &first_line, const Line &second_line); // 0 - параллельны, 1 - пересекаются, 2 - совпадают
     friend Point *intersection_point(const Line &first_line, const Line &second_line);
@@ -21,7 +23,7 @@ public:
 
     void update(const Point &first_point, const Point &second_point);
 
-    int isPointOnLine(const Point &point);
+    int check_point(const Point &point);
 
     double distance_to_point(const Point &point) const;
 
@@ -32,4 +34,8 @@ public:
     double b() const;
 
     double c() const;
+
+    void shift (const Vector &vector);
+
+    bool intersect_segment(const Segment &segment);
 };

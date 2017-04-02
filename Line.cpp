@@ -57,7 +57,7 @@ Point *intersection_point(const Line &first_line, const Line &second_line) {
 
 }
 
-int Line::isPointOnLine(const Point &point) { // 1 - верхняя полуплоскость, -1 - нижняя, 0 - на линии
+int Line::check_point(const Point &point) { // 1 - верхняя полуплоскость, -1 - нижняя, 0 - на линии
 
     return compare((a_ * point.x() + b_ * point.y() + c_), 0);
 
@@ -97,3 +97,56 @@ double Line::b() const {
 double Line::c() const {
     return c_;
 }
+
+void Line::shift(const Vector &vector) {
+    if (a_ != 0 && b_ != 0) {
+        Point f_pt(0, -c_ / a_);
+        Point s_pt(1, (-b_ - c_) / a_);
+
+        f_pt.shift(vector);
+        s_pt.shift(vector);
+
+        update(f_pt, s_pt);
+    }
+    else if (a_ == 0) {
+        Point f_pt(-c_ / b_, 123);
+        Point s_pt(-c_ / b_, 200);
+
+        f_pt.shift(vector);
+        s_pt.shift(vector);
+
+        update(f_pt, s_pt);
+    }
+    else if (b_ == 0) {
+        Point f_pt(0, -c_ / a_);
+        Point s_pt(50, -c_ / a_);
+
+        f_pt.shift(vector);
+        s_pt.shift(vector);
+
+        update(f_pt, s_pt);
+    }
+}
+
+bool Line::intersect_segment(const Segment &segment) {
+    Line line(segment.first_point(), segment.second_point());
+
+    if (intersection(*this, line)) { //прямые пересекаются или совпадают
+        Point *intersection_pt = intersection_point(*this, line);
+
+        if (intersection_pt->belong_to_segment(segment)) {
+            delete intersection_pt;
+
+            return true;
+        }
+        else {
+            delete intersection_pt;
+
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+}
+

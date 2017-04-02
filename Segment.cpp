@@ -83,3 +83,8 @@ bool intersection(const Segment &first_segment, const Segment &second_segment) {
     return f_condition && s_condition && t_contidion && fo_contidion;
 
 }
+
+void Segment::shift(const Vector &vector) {
+    first_point_.shift(vector);
+    second_point_.shift(vector);
+}

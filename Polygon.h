@@ -5,6 +5,8 @@
 #include "Line.h"
 #include "Segment.h"
 
+using std::vector;
+
 
 bool check_point(const Point &verified_point, Point *points, unsigned int points_count);
 
@@ -12,7 +14,7 @@ double area(unsigned int points_count, Point *points);
 
 bool isConvexPolygon(const Point *points, int count_points);
 
-Point *convexJarvis(unsigned int points_count, Point *points);
+void convexJarvis(vector<Point> &points, vector<int> &result);
 
 
 class BaseShape {
@@ -21,7 +23,7 @@ class BaseShape {
 
     virtual bool check_point(double, double) = 0;
 
-    virtual bool intersect_segment(double, double, double, double) = 0;
+    virtual bool intersect_segment(const Segment &segment) = 0;
 
 };
 
