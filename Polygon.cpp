@@ -1,12 +1,8 @@
 #include <cmath>
-#include <algorithm>
 #include <iostream>
 #include "Polygon.h"
 #include "other_func.h"
 #include "Ray.h"
-#include <vector>
-
-using std::vector;
 
 bool check_point(const Point &verified_point, const Point *points, unsigned int points_count) {
 
@@ -98,68 +94,6 @@ bool isConvexPolygon(const Point *points, int count_points) {
         return true;
     else
         return(false);
-
-}
-
-
-void convexJarvis(vector<Point> &points, vector<int> &result) {
-    int n = points.size();
-    int first, q, next, i;
-    double sign;
-    // находим самую нижнюю из самых левых точек
-    first = 0;
-    for (i = 1; i < n; ++ i)
-        if (points[i].x() < points[first].x() || (points[i].x() == points[first].x() && points[i].y() < points[first].y()))
-            first = i;
-
-    q = first; // текущая точка
-    // добавляем точки в оболочку
-    do
-    {
-        result.push_back(q);
-        next = q;
-        // ищем следующую точку
-        for (i = n - 1; i >= 0; -- i)
-            if (points[i].x() != points[q].x() || points[i].y() != points[q].y())
-            {
-                sign = area_triangle (points[q], points[i], points[next]);
-
-                if (next == q || sign > 0 || (sign == 0 && point_in_box(points[next], points[q], points[i])))
-                    next = i;
-            }
-        q = next;
-    }
-    while (q != first);
-}
-
-Point *convexHullGraham(unsigned int points_count, Point *points) {
-
-    Point st_pt = points[0];
-    unsigned int i;
-
-    for (i = 1; i < points_count; ++i) { //поиск минимальной точки (стартовой)
-        if (st_pt.y() > points[i].y())
-            st_pt = points[i];
-        else if (st_pt.y() == points[i].y() && st_pt.x() > points[i].x())
-            st_pt = points[i];
-    }
-
-    swap(points[i], points[0]);
-
-    //заполняем массив полярными углами от стартовой точки
-
-    double *polar = new double[points_count - 1];
-
-    Vector h_vec(st_pt.x(), st_pt.y(), st_pt.x() + 1, st_pt.y());
-    Vector cur_vec;
-
-    for (unsigned int i = 1; i < points_count; ++i) {
-        cur_vec.update(st_pt, points[i]);
-        polar[i - 1] = vecMul(h_vec, cur_vec);
-    }
-
-    quickSort(polar, 0, points_count - 1);
-
 
 }
 
