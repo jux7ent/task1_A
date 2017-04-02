@@ -1,8 +1,9 @@
 #pragma once
 
-#include "Polygon.h"
+#include "BaseShape.h"
 
 class Point;
+class Segment;
 
 class Line : public BaseShape {
 
@@ -23,11 +24,11 @@ public:
 
     void update(const Point &first_point, const Point &second_point);
 
-    int check_point(const Point &point);
-
     double distance_to_point(const Point &point) const;
 
     double distance_to_line(const Line &line) const;
+
+    int check_point_plane(const Point &point);
 
     double a() const;
 
@@ -37,5 +38,7 @@ public:
 
     void shift (const Vector &vector);
 
-    bool intersect_segment(const Segment &segment);
+    bool intersection_segment(const Segment &segment) const;
+
+    bool check_point(const Point &point) const;
 };

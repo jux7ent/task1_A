@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Polygon.h"
+#include "BaseShape.h"
 
 class Line;
 class Ray;
@@ -46,5 +46,9 @@ public:
     bool isNone();
 
     void shift(const Vector &v);
+
+    bool check_point(const Point &point) const;
+
+    bool intersection_segment(const Segment &segment) const;
 
 };

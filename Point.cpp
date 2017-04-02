@@ -72,7 +72,7 @@ bool Point::belong_to_segment(const Segment &segment) const {
 
     Line line(segment.first_point(), segment.second_point());
 
-    if (line.check_point(*this) == 0) { //принадлежность точки прямой
+    if (line.check_point_plane(*this) == 0) { //принадлежность точки прямой
         Vector first_vector(*this, segment.first_point()), second_vector(*this, segment.second_point());
 
         return compare(scalarMul(first_vector, second_vector), 0) <= 0;
@@ -85,7 +85,7 @@ bool Point::belong_to_ray(const Ray &ray) const {
 
     Line line(ray.first_point(), ray.second_point());
 
-    if (line.check_point(*this) == 0) { //точка лежит на прямой
+    if (line.check_point_plane(*this) == 0) { //точка лежит на прямой
 
         Vector first_vector(ray.first_point(), ray.second_point()), second_vector(ray.first_point(), *this);
         return compare(scalarMul(first_vector, second_vector), 0) >= 0;
@@ -101,4 +101,12 @@ bool Point::belong_to_ray(const Ray &ray) const {
 void Point::shift(const Vector &v) {
     x_ += v.x();
     y_ += v.y();
+}
+
+bool Point::check_point(const Point &point) const {
+    return x_ == point.x_ && y_ == point.y_;
+}
+
+bool Point::intersection_segment(const Segment &segment) const {
+    return belong_to_segment(segment);
 }

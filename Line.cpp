@@ -57,10 +57,9 @@ Point *intersection_point(const Line &first_line, const Line &second_line) {
 
 }
 
-int Line::check_point(const Point &point) { // 1 - верхняя полуплоскость, -1 - нижняя, 0 - на линии
+int Line::check_point_plane(const Point &point) { // 1 - верхняя полуплоскость, -1 - нижняя, 0 - на линии
 
     return compare((a_ * point.x() + b_ * point.y() + c_), 0);
-
 }
 
 double Line::distance_to_point(const Point &point)  const {
@@ -128,7 +127,7 @@ void Line::shift(const Vector &vector) {
     }
 }
 
-bool Line::intersect_segment(const Segment &segment) {
+bool Line::intersection_segment(const Segment &segment) const {
     Line line(segment.first_point(), segment.second_point());
 
     if (intersection(*this, line)) { //прямые пересекаются или совпадают
@@ -148,5 +147,9 @@ bool Line::intersect_segment(const Segment &segment) {
     else {
         return false;
     }
+}
+
+bool Line::check_point(const Point &point) const {
+    return point.belong_to_line(*this);
 }
 

@@ -1,31 +1,18 @@
 #pragma once
 
+#include "BaseShape.h"
 #include "Vector.h"
-#include "Point.h"
 #include "Line.h"
+#include "Point.h"
 #include "Segment.h"
 
-using std::vector;
 
-
-bool check_point(const Point &verified_point, Point *points, unsigned int points_count);
+bool check_point(const Point &verified_point, const Point *points, unsigned int points_count);
 
 double area(unsigned int points_count, Point *points);
 
 bool isConvexPolygon(const Point *points, int count_points);
 
-void convexJarvis(vector<Point> &points, vector<int> &result);
-
-
-class BaseShape {
-
-    virtual void shift(const Vector &) = 0;
-
-    virtual bool check_point(double, double) = 0;
-
-    virtual bool intersect_segment(const Segment &segment) = 0;
-
-};
 
 template<unsigned int points_count>
 class Polygon : public BaseShape {
@@ -44,7 +31,7 @@ public:
 
     bool check_point(const Point &verified_point) const;
 
-    bool intersect_segment(const Segment &segment) const;
+    bool intersection_segment(const Segment &segment) const;
 
     double area() const;
 
@@ -86,7 +73,7 @@ bool Polygon<points_count>::check_point(const Point &verified_point) const {
 }
 
 template<unsigned int points_count>
-bool Polygon<points_count>::intersect_segment(const Segment &segment) const {
+bool Polygon<points_count>::intersection_segment(const Segment &segment) const {
 
     Line line(segment.first_point(), segment.second_point());
     Line lines[points_count];

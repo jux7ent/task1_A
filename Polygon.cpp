@@ -8,7 +8,7 @@
 
 using std::vector;
 
-bool check_point(const Point &verified_point, Point *points, unsigned int points_count) {
+bool check_point(const Point &verified_point, const Point *points, unsigned int points_count) {
 
     Point extension(verified_point.x() + 123, verified_point.y() + 15);
     Ray ray(verified_point, extension);

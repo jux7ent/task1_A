@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BaseShape.h"
 #include <iostream>
 #include "Point.h"
 #include "other_func.h"
@@ -272,38 +273,4 @@ void J() {
 
 void K() {
 
-    int points_count;
-
-    cin >> points_count;
-
-    std::vector<Point> points;
-
-    for (int i = 0; i < points_count; ++i) {
-
-        int x, y;
-
-        cin >> x >> y;
-
-        Point temp_point(x, y);
-
-        points.push_back(temp_point);
-    }
-
-    std::vector<int> result;
-
-    convexJarvis(points, result);
-
-    cout << result.size() << endl;
-    points_count = result.size();
-    Point *pt_area = new Point[points_count];
-
-    for (int i = 0; i < result.size(); ++i) {
-        cout << points[result[i]].x() << ' ' << points[result[i]].y() << endl;
-        pt_area[i] = points[result[i]];
-    }
-
-    cout << area(points_count, pt_area) << endl;
-
-
-    delete[] pt_area;
 }

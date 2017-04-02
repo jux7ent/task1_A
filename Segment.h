@@ -1,6 +1,8 @@
 #pragma once
 
+#include "BaseShape.h"
 #include "Point.h"
+
 
 class Segment : public BaseShape {
 
@@ -22,11 +24,13 @@ public:
 
     double distance_to_point(const Point &point) const;
 
-    void shift(const Vector &vector);
-
     Point first_point() const;
 
     Point second_point() const;
 
+    void shift(const Vector &vector);
 
+    bool check_point(const Point &point) const;
+
+    bool intersection_segment(const Segment &segment) const;
 };

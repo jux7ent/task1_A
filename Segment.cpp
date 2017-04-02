@@ -88,3 +88,11 @@ void Segment::shift(const Vector &vector) {
     first_point_.shift(vector);
     second_point_.shift(vector);
 }
+
+bool Segment::check_point(const Point &point) const {
+    return point.belong_to_segment(*this);
+}
+
+bool Segment::intersection_segment(const Segment &segment) const {
+    return intersection(*this, segment);
+}

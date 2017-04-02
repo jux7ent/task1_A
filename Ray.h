@@ -1,6 +1,9 @@
 #pragma once
+
+#include "BaseShape.h"
 #include "Point.h"
-#include "Vector.h"
+
+class Vector;
 
 class Ray : public BaseShape {
 
@@ -15,13 +18,15 @@ public:
 
     Ray(const Point &first_point, const Point &second_point);
 
-    bool intersect_to_segment(const Segment &segment) const;
-
-    void shift(const Vector &vector);
-
     double distance_to_point(const Point &point);
 
     Point first_point() const;
 
     Point second_point() const;
+
+    void shift(const Vector &vector);
+
+    bool check_point(const Point &point) const;
+
+    bool intersection_segment(const Segment &segment) const;
 };

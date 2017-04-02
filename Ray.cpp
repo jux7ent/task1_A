@@ -1,6 +1,5 @@
 #include "Ray.h"
 #include "other_func.h"
-#include "Line.h"
 
 Ray::Ray() {
     first_point_.insert(0, 0);
@@ -32,7 +31,7 @@ double Ray::distance_to_point(const Point &point) {
     }
 }
 
-bool Ray::intersect_to_segment(const Segment &segment) const {
+bool Ray::intersection_segment(const Segment &segment) const {
     Line f_line(first_point_, second_point_);
     Line s_line(segment.first_point(), segment.second_point());
 
@@ -62,4 +61,8 @@ Point Ray::second_point() const {
 void Ray::shift(const Vector &vector) {
     first_point_.shift(vector);
     second_point_.shift(vector);
+}
+
+bool Ray::check_point(const Point &point) const {
+    return point.belong_to_ray(*this);
 }
