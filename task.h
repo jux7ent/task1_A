@@ -270,7 +270,3 @@ void J() {
 
     delete[] points;
 }
-
-void K() {
-
-}

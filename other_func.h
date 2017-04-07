@@ -36,12 +36,8 @@ inline void swap(Point &f_pt, Point &s_pt) {
 }
 
 inline bool compare (Point f_pt, Point s_pt) {
-    return f_pt.x() < s_pt.x() || f_pt.x() == s_pt.x() && f_pt.y() < s_pt.y();
+    return (f_pt.x() < s_pt.x()) || ((f_pt.x() == s_pt.x()) && (f_pt.y() < s_pt.y()));
 }
-
-bool point_in_box(const Point &f_pt, const Point &s_pt, const Point &ch_pt);
-
-double cosAngle(Point f_pt, Point s_pt, Point t_pt);
 
 void quickSort(double *arr, int begin, int end);
 

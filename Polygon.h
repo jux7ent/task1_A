@@ -11,7 +11,7 @@ bool check_point(const Point &verified_point, const Point *points, unsigned int 
 
 double area(unsigned int points_count, Point *points);
 
-bool isConvexPolygon(const Point *points, int count_points);
+bool isConvexPolygon(const Point *points, int points_count);
 
 
 template<unsigned int points_count>
@@ -41,7 +41,7 @@ public:
 template<unsigned int points_count>
 Polygon<points_count>::Polygon() {
 
-    for (short i = 0; i < points_count; ++i) {
+    for (unsigned int i = 0; i < points_count; ++i) {
         points_[i].insert(0, 0);
     }
 
@@ -50,7 +50,7 @@ Polygon<points_count>::Polygon() {
 template<unsigned int points_count>
 Polygon<points_count>::Polygon(const Point *points) {
 
-    for (short i = 0; i < points_count; ++i) {
+    for (unsigned int i = 0; i < points_count; ++i) {
         points_[i] = points[i];
     }
 
@@ -59,7 +59,7 @@ Polygon<points_count>::Polygon(const Point *points) {
 template<unsigned int points_count>
 void Polygon<points_count>::shift(const Vector &vector) {
 
-    for (short i = 0; i < points_count; ++i) {
+    for (unsigned int i = 0; i < points_count; ++i) {
         points_[i].x(vector.x());
         points_[i].y(vector.y());
     }
@@ -78,7 +78,7 @@ bool Polygon<points_count>::intersection_segment(const Segment &segment) const {
     Line line(segment.first_point(), segment.second_point());
     Line lines[points_count];
 
-    for (short i = 0; i < points_count; ++i) {
+    for (unsigned int i = 0; i < points_count; ++i) {
 
         lines[i].update(points_[i % points_count], points_[(i + 1) % points_count]);
 
@@ -140,3 +140,4 @@ public:
     Triangle(const Point *points) : Polygon(points) {}
 
 };
+

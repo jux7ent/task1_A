@@ -2,9 +2,6 @@
 #include <iostream>
 #include "Point.h"
 #include "other_func.h"
-#include "Vector.h"
-#include "Line.h"
-#include "Segment.h"
 #include "Ray.h"
 
 Point::Point() {
@@ -27,11 +24,9 @@ void Point::insert(double x, double y) {
 }
 
 void printPoints(const unsigned int count_points, const Point *points) {
-
     for (unsigned int i = 0; i < count_points; ++i) {
         std::cout << points[i].x() << ' ' << points[i].y() << std::endl;
     }
-
 }
 
 double Point::x() const {
@@ -44,10 +39,14 @@ double Point::y() const {
 
 double Point::x(double number) {
     x_ += number;
+
+    return x_;
 }
 
 double Point::y(double number) {
     y_ += number;
+
+    return y_;
 }
 
 bool Point::isNone(bool sign) {
